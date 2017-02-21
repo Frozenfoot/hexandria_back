@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Nikita on 22.02.2017.
@@ -15,9 +16,10 @@ import java.security.NoSuchAlgorithmException;
 public class AuthorizationUtils {
     private static Logger logger = LoggerFactory.getLogger(AuthorizationUtils.class);
     private static final String SALT = "BB081A278A0A6B452531752559C208C8B0E868DC2FD6EA3149C4036D3C9DCB8BD1D877824BBA287EF16F885FF357FD32AF7580F8641D460F3251C758711E5656";
+    private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
 
     @Nullable
-    public String generateSHA512(String passwordToHash) {
+    public static String generateSHA512(String passwordToHash) {
         String generatedPassword = null;
         try {
             final MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -34,5 +36,9 @@ public class AuthorizationUtils {
             logger.error("Failed to encode UTF-8 while creating HASH", e);
         }
         return generatedPassword;
+    }
+
+    public static long generateUID() {
+        return ID_GENERATOR.getAndIncrement();
     }
 }
