@@ -38,7 +38,10 @@ public class AuthorizationUtils {
         return generatedPassword;
     }
 
+    //Временное решение, в дальнейшем будем генерить ID в БД
     public static long generateUID() {
         return ID_GENERATOR.getAndIncrement();
     }
+
+
 }

@@ -3,7 +3,10 @@ package sample;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import sample.auth.RegistrationCredentials;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 public class UserController {
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @NotNull
     private final AccountService accountService;
@@ -20,10 +24,13 @@ public class UserController {
      * Подробнее можно почитать в сорцах к аннотации {@link RequestMapping}. Там описано как заинжектить различные атрибуты http-запроса.
      * Возвращаемое значение можно так же варьировать. Н.п. Если отдать InputStream, можно стримить музыку или видео
      */
-    @RequestMapping(path = "/sample/user", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    public GetMsgRequest getMsg(@RequestBody GetMsgRequest body, HttpSession httpSession) {
-        httpSession.setAttribute("userId", body.getUserId());
-        return body;
+    @RequestMapping(path = "/register", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    public RegistrationCredentials register(@RequestBody RegistrationCredentials credentials, HttpSession httpSession) {
+        final String login = credentials.getLogin();
+        logger.debug("/register called with login:{}", login);
+        final long uid = accountService.register(credentials);
+        httpSession.setAttribute("userId", uid);
+        return credentials;
     }
 
     /**
@@ -32,18 +39,5 @@ public class UserController {
      */
     public UserController(@NotNull AccountService accountService) {
         this.accountService = accountService;
-    }
-
-    private static final class GetMsgRequest {
-        int userId;
-
-        @JsonCreator
-        GetMsgRequest(@JsonProperty("userId") int userId) {
-            this.userId = userId;
-        }
-
-        public int getUserId() {
-            return userId;
-        }
     }
 }
