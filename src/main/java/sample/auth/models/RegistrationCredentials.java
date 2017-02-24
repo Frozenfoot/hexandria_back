@@ -12,7 +12,7 @@ public final class RegistrationCredentials {
     @JsonProperty("email")
     String email;
     @JsonCreator
-    RegistrationCredentials(String login, String password, String email) {
+    RegistrationCredentials(@JsonProperty("login") String login,@JsonProperty("password") String password,@JsonProperty("email") String email) {
         this.login = login;
         this.password = password;
         this.email = email;
