@@ -1,4 +1,3 @@
-/target/
-/.idea/
-*.class
-/hexandria.iml
+target/
+.idea/
+hexandria.iml
