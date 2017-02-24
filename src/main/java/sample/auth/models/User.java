@@ -1,4 +1,4 @@
-package sample.auth;
+package sample.auth.models;
 
 public final class User {
     private final long userId;

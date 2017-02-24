@@ -1,4 +1,4 @@
-package sample.auth;
+package sample.auth.utils;
 
 
 import org.jetbrains.annotations.Nullable;
@@ -10,9 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
- * Created by Nikita on 22.02.2017.
- */
+
 public class AuthorizationUtils {
     private static Logger logger = LoggerFactory.getLogger(AuthorizationUtils.class);
     private static final String SALT = "BB081A278A0A6B452531752559C208C8B0E868DC2FD6EA3149C4036D3C9DCB8BD1D877824BBA287EF16F885FF357FD32AF7580F8641D460F3251C758711E5656";
