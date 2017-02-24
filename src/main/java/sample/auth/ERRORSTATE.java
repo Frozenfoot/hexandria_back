@@ -2,5 +2,14 @@ package sample.auth;
 
 
 public enum ERRORSTATE {
-    STATE_403, STATE_404, STATE_400
-}
+    FORBIDDEN(403), NOT_FOUND(404), BAD_REQUEST(400);
+    private int value;
+
+    private ERRORSTATE(int value) {
+        this.value = value;
+    }
+
+    public int getCode() {
+        return value;
+    }
+};
